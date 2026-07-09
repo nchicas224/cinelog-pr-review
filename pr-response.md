@@ -3,19 +3,19 @@
 ## AI Usage
 <!-- Fill in at the end — how you used AI tools during this project -->
 
-## Comment 1 — Rename
+## Comment 1 — Default Visibility
 **What I did:**
 **How I verified:**
 
-## Comment 2 — Deduplication
+## Comment 2 — Missing test
 **What I did:**
 **How I verified:**
 
-## Comment 3 — Missing test
+## Comment 3 — Rename
 **What I did:**
 **How I verified:**
 
-## Comment 4 — Default visibility
+## Comment 4 — Deduplication
 **My position:**
 **Reasoning:**
 **Tradeoff acknowledged:**
