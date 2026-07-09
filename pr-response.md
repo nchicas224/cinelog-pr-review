@@ -8,8 +8,9 @@
 **How I verified:**
 
 ## Comment 2 — Missing test
-**What I did:**
-**How I verified:**
+**My position:**
+**Reasoning:**
+**Tradeoff acknowledged:**
 
 ## Comment 3 — Rename
 **What I did:**
@@ -18,9 +19,8 @@ To rename save_to_watchlist to add_to_watchlist, I ran the keyboard command Shif
 This fix was verified by running a global search (CTRL + SHIFT + F) and running a search for 'save_to_watchlist'. The search returned empty.
 
 ## Comment 4 — Deduplication
-**My position:**
-**Reasoning:**
-**Tradeoff acknowledged:**
+**What I did:**
+**How I verified:**
 
 ## Comment 5 — Sort order
 **My position:**
