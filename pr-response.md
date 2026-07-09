@@ -20,7 +20,15 @@ This fix was verified by running a global search (CTRL + SHIFT + F) and running 
 
 ## Comment 4 — Deduplication
 **What I did:**
+To resolve this bug, I noticed that the WatchlistEntry model in models.py and watchlist_service.py::add_to_watchlist did not include checks for duplication at the database and application layer.
+
+Using the existing duplication check from collection_service.py, I created AlreadyInWatchlistError and implemented the application layer check in add_to_watchlist to raise that error if an entry is found.
+
+Additionally, I added a unique constraint to at the database layer by adding the (user_id, film_id) constraint to the WatchlistEntry model.
 **How I verified:**
+The bug fix was verified by creating a new test_watchlist module with test_add_to_watchlist_duplicate_raises.
+
+This test function test the fixed add_to_watchlist function and WatchlistEntry model to assert that AlreadyinWatchlistError raises if an entry is found before trying to add the film to the user's watchlist.
 
 ## Comment 5 — Sort order
 **My position:**
