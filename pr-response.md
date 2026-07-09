@@ -4,13 +4,15 @@
 <!-- Fill in at the end — how you used AI tools during this project -->
 
 ## Comment 1 — Default Visibility
-**What I did:**
-**How I verified:**
-
-## Comment 2 — Missing test
 **My position:**
 **Reasoning:**
 **Tradeoff acknowledged:**
+
+## Comment 2 — Missing test
+**What I did:**
+I added the test function test_add_to_watchlist_nonexistent_raises() to the test_watchlist module. This test enforces the film_id validation from the database in lines 29-31 of watchlist_service.py::add_to_watchlist - before a new WatchlistEntry is created.
+**How I verified:**
+I ran the test with pytest tests/test_watchlist.py::test_add_to_watchlist_nonexistent_raises and verified that the test passed. I then ran the entire test suite with pytest /tests and verified that all existing tests across the suit passed.
 
 ## Comment 3 — Rename
 **What I did:**
