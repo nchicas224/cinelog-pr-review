@@ -11,7 +11,7 @@ User's typically would prefer that their creations remain private unless the pla
 
 I think we should also discuss whether the public property displays the watchlist to the entire userbase or to a user's community. Private watchlist may have the potential to be shared via a specialized link - which the user can then share to their friend.
 **Tradeoff acknowledged:**
-The strongest tradeoff that I can see from this decision is that users may miss the option to set their Watchlist to public. If a user happens to miss the setting, they may run into roadblocks when they go to share their watchlist.
+Private-by-default protects users from unintentionally exposing their interests, but it may reduce public discovery and sharing. If social discovery is a primary product goal, public-by-default with prominent disclosure could be justified. We should also clarify whether visibility applies to an entire watchlist or individual entries.
 
 ## Comment 2 — Missing test
 **What I did:**
@@ -41,11 +41,17 @@ This test function test the fixed add_to_watchlist function and WatchlistEntry m
 **My position:**
 I agree with the maintainer on this comment. User's would benefit from seeing their most recently added films first rather than an alphabetical approach.
 **Reasoning:**
-Films that are most recently added to a user's watchlist are likely to be fresh in the user's mind than an alphabetical film that was added n time ago.
+Newest-first is a sensible default because it confirms recent additions and reflects current interest. However, it can bury older entries and is less useful when someone is looking for a known title. Ideally, the UI should support alternative sorting such as alphabetical, oldest-added, and newest-added, while using newest-first as the initial default.
 
-If user's are able to see their most recent interests, then film view count should increase drastically when compared to an outdated alpabetical first list.
+Additionally, sorting only by date_added can be nondeterministic when two entries have the same timestamp. A stable ordering could add a secondary key: 
+```
+.order_by(
+    WatchlistEntry.date_added.desc(),
+    WatchlistEntry.id.asc(),
+)
+```
 **Engagement with reviewer's point:**
-I completely agree with your point here. User's are more likely to be interested in a film they've just recently added or heard of. Rather than having the user go through the roadblock of searching for what they've just added, we can just show their recents first.
+I completely agree with your point here. User's are more likely to be interested in a film they've just recently added or heard of. Rather than having the user go through the roadblock of searching for what they've just added, we can just show their recents first. However, a strong tradeoff to this approach describes burying older entries under newer additions. This could be less useful to the user if they are limited to searching by date_added.
 
 ## Comment 6 — Rebase
 **What conflicted:**
