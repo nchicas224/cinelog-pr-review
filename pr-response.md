@@ -5,8 +5,13 @@
 
 ## Comment 1 — Default Visibility
 **My position:**
+I agree with the dev-lead on this PR topic. The defaulted value of public=True for a user's watchlist may signal a loss of watchlist control and ownership to the user if the property field is not explicitly stated to the user.
 **Reasoning:**
+User's typically would prefer that their creations remain private unless the platform explicitly informs the user of its purpose. For this reason, I believe that the default value for the public property should be set to False and the option to change it to True should be directly shown to the user during the Watchlist creation.
+
+I think we should also discuss whether the public property displays the watchlist to the entire userbase or to a user's community. Private watchlist may have the potential to be shared via a specialized link - which the user can then share to their friend.
 **Tradeoff acknowledged:**
+The strongest tradeoff that I can see from this decision is that users may miss the option to set their Watchlist to public. If a user happens to miss the setting, they may run into roadblocks when they go to share their watchlist.
 
 ## Comment 2 — Missing test
 **What I did:**
