@@ -39,8 +39,13 @@ This test function test the fixed add_to_watchlist function and WatchlistEntry m
 
 ## Comment 5 — Sort order
 **My position:**
+I agree with the maintainer on this comment. User's would benefit from seeing their most recently added films first rather than an alphabetical approach.
 **Reasoning:**
+Films that are most recently added to a user's watchlist are likely to be fresh in the user's mind than an alphabetical film that was added n time ago.
+
+If user's are able to see their most recent interests, then film view count should increase drastically when compared to an outdated alpabetical first list.
 **Engagement with reviewer's point:**
+I completely agree with your point here. User's are more likely to be interested in a film they've just recently added or heard of. Rather than having the user go through the roadblock of searching for what they've just added, we can just show their recents first.
 
 ## Comment 6 — Rebase
 **What conflicted:**
