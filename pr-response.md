@@ -55,8 +55,13 @@ I completely agree with your point here. User's are more likely to be interested
 
 ## Comment 6 — Rebase
 **What conflicted:**
+The rebase produced an add/add conflict in `.gitignore` because both `main` and my feature branch had added the file independently. It also produced a conflict in `models.py` when the watchlist deduplication commit was replayed: updated `main` had migrated film IDs from integers to UUID strings, while the watchlist branch still defined `WatchlistEntry.film_id` as an integer.
+
 **How I resolved it:**
+I skipped the feature branch's `.gitignore` commit because `main` already contained the same rules plus an additional `.pytest_cache/` rule. In `models.py`, I retained the UUID definitions from `main` and the watchlist changes from my feature branch. In particular, I changed `WatchlistEntry.film_id` to `db.String(36)` so it matches `Film.id`, while preserving the relationship and unique constraint on `(user_id, film_id)`. I then staged the resolved file and continued the rebase until all feature commits had been replayed.
+
 **How I verified no conflict remains:**
+I ran the full test suite and all 6 tests passed. I inspected the diff against `origin/main` to confirm that `WatchlistEntry.film_id` uses `db.String(36)`, checked that the working tree was clean, and reviewed the feature-only commit graph. I also ran `git log --merges --oneline origin/main..HEAD` to confirm that the rebased feature history contains no merge commits.
 
 ## PR Description
 <!-- Written at the end — feature overview, design decisions, manual testing steps -->
