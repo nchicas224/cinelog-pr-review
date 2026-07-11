@@ -1,7 +1,9 @@
 # PR Response Doc — CineLog Watchlist Feature
 
 ## AI Usage
-<!-- Fill in at the end — how you used AI tools during this project -->
+I used AI tools to understand SQLAlchemy ORM behavior, particularly the difference between foreign keys, relationships, explicit joins, and eager loading with joinedload. I also used AI to review pytest fixture scope, walk through the rebase conflict-resolution process, and evaluate whether my commit messages followed Conventional Commits.
+For Comment 4, I asked whether duplicate prevention should exist in both the application and database layers. The AI identified that the application check provides a clear domain-specific error, while the database constraint protects the invariant from concurrent requests and code paths that bypass the service. My final implementation applies both protections and verifies the behavior with a duplicate-entry test.
+For Comment 5, I asked AI to challenge the newest-first position. It raised the counterarguments that alphabetical order is more predictable when locating a known title and that newest-first can bury older entries. My final reasoning still recommends newest-first as the default, but acknowledges those drawbacks, proposes selectable sort options, and identifies the need for a secondary key when timestamps are equal.
 
 ## Comment 1 — Default Visibility
 **My position:**
