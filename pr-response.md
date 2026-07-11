@@ -65,3 +65,6 @@ I ran the full test suite and all 6 tests passed. I inspected the diff against `
 
 ## PR Description
 <!-- Written at the end — feature overview, design decisions, manual testing steps -->
+
+## Git Log: origin/main..HEAD
+![alt text](image.png)
