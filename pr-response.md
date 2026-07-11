@@ -66,7 +66,108 @@ I skipped the feature branch's `.gitignore` commit because `main` already contai
 I ran the full test suite and all 6 tests passed. I inspected the diff against `origin/main` to confirm that `WatchlistEntry.film_id` uses `db.String(36)`, checked that the working tree was clean, and reviewed the feature-only commit graph. I also ran `git log --merges --oneline origin/main..HEAD` to confirm that the rebased feature history contains no merge commits.
 
 ## PR Description
-<!-- Written at the end — feature overview, design decisions, manual testing steps -->
+# CineLog Watchlist Feature
+
+## Summary
+
+This PR adds a watchlist feature to CineLog. Users can add films they intend to watch and retrieve their saved films through the watchlist API. Each returned film includes its watchlist metadata, including when it was added and whether the entry is public.
+
+The implementation also:
+
+- Uses UUID film IDs introduced by the updated `main` branch.
+- Prevents the same user from adding the same film more than once.
+- Raises a domain-specific error when a duplicate is detected.
+- Validates that a film exists before creating an entry.
+- Loads related `Film` objects efficiently when retrieving a watchlist.
+- Adds tests for successful additions, duplicate entries, and nonexistent films.
+
+## Design Decisions
+
+### Visibility Default
+
+New watchlist entries default to `public=False`. This prevents users from unintentionally exposing their saved films. The tradeoff is reduced discoverability and additional effort when users want to share entries. A future interface should make visibility clear and allow users to change it intentionally.
+
+### Sort Order
+
+Watchlist entries are returned newest-first using `date_added`. This makes recent additions easy to confirm and reflects a user's current interests. The tradeoff is that older entries may become harder to find. A future interface could offer newest-added, oldest-added, and alphabetical sorting.
+
+## Manual Testing
+
+1. Install the dependencies and start the application:
+
+   ```bash
+   pip install -r requirements.txt
+   python app.py
+   ```
+
+2. In another terminal, open a Flask shell:
+
+   ```bash
+   flask --app app:create_app shell
+   ```
+
+3. Create a test user and two films:
+
+   ```python
+   from app import db
+   from models import User, Film
+
+   user = User(username="watchlist-test", email="watchlist@example.com")
+   film_one = Film(title="Alien", year=1979, genre="Horror")
+   film_two = Film(title="Paddington 2", year=2017, genre="Comedy")
+
+   db.session.add_all([user, film_one, film_two])
+   db.session.commit()
+
+   print("USER_ID:", user.id)
+   print("FILM_ONE_ID:", film_one.id)
+   print("FILM_TWO_ID:", film_two.id)
+   ```
+
+4. Record the three UUIDs printed by the shell, then exit:
+
+   ```python
+   exit()
+   ```
+
+5. Add the first film, replacing the placeholders with those UUIDs:
+
+   ```bash
+   curl -X POST http://localhost:5000/watchlist/<USER_ID>/add \
+     -H "Content-Type: application/json" \
+     -d '{"film_id":"<FILM_ONE_ID>"}'
+   ```
+
+6. Add the second film:
+
+   ```bash
+   curl -X POST http://localhost:5000/watchlist/<USER_ID>/add \
+     -H "Content-Type: application/json" \
+     -d '{"film_id":"<FILM_TWO_ID>"}'
+   ```
+
+7. Retrieve the user's watchlist:
+
+   ```bash
+   curl http://localhost:5000/watchlist/<USER_ID>
+   ```
+
+8. Confirm that:
+
+   - Both films are returned.
+   - The second film appears first because it was added most recently.
+   - Each result includes `date_added`.
+   - Each result has `"public": false`.
+   - The returned film IDs are UUID strings.
+
+9. Run the automated regression suite:
+
+   ```bash
+   pytest tests/
+   ```
+
+   Confirm that all six tests pass.
+
 
 ## Git Log: origin/main..HEAD
 ![alt text](image.png)
